@@ -11,8 +11,7 @@ const fetchuser=require('../middleware/fetchuser');
 router.post('/createuser', [
   body('email', 'Enter valid email').isEmail(),
   body('name', 'Enter valid email').isLength({ min: 3 }),
-  body('password').isLength({ min: 5 })
-], async (req, res) => {
+  body('password').isLength({ min: 5 })], async (req, res) => {
   // Check fo vaidation whether is any rule(defined in User model) breaked or not
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -96,7 +95,7 @@ router.post('/getuser', fetchuser, async (req, res) => {
   try {
     const userid = req.user.id;
     const user = await User.findById(userid).select("-password");
-    res.send(user);
+    res.send({user});
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Internal server error");
