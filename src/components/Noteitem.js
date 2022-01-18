@@ -7,7 +7,9 @@ function Noteitem(props) {
       <div className='card'>
         <div className="card-body">
           <h5 className="card-title">{note.title}</h5>
-          <p className="card-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tempore nemo eaque, placeat dolorum harum modi.</p>
+          <p className="card-text">{note.description}</p>
+          <i className="far fa-trash-alt mx-2"></i>
+          <i className="fas fa-edit mx-2"></i>
         </div>
       </div>
     </div>
