@@ -62,9 +62,31 @@ const NoteState=(props)=>{
       "__v": 0
     }
   ];
-  const [notes, setNotes] = useState(notesInitially)
+  const [notes, setNotes] = useState(notesInitially);
+
+  // addNote
+  const addNote=(title, description, tag)=>{
+    // We will created a note object and now concate this object to notes array of object
+    const note={
+      "title":title,
+      "description":description,
+      "tag":tag
+    } 
+    setNotes(notes.concat(note)); // arr.concat() will return an updated array
+  }
+
+  // deleteNote
+  const deleteNote=()=>{
+
+  }
+
+  // editNote
+  const editNote=()=>{
+
+  }
+
   return(
-    <NoteContext.Provider value={{notes, setNotes}}>
+    <NoteContext.Provider value={{notes,addNote, deleteNote, editNote}}>
       {props.children}
     </NoteContext.Provider>
   )
