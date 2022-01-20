@@ -4,7 +4,7 @@ import NoteContext from "../context/notes/NoteContext";
 function AddNote() {
   // using NoteContext so that we can use, call and update the state that are exported  in NoteState
   const context = useContext(NoteContext);
-  const {notes, addNote}=context;
+  const {addNote}=context;
   // making a state for storing the vakues of note from input fields
   const [note, setNote] = useState({title:"", description:"", tag:""})
   // making a arrow function to hanlde the submit button click 
