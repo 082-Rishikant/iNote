@@ -13,6 +13,7 @@ function AddNote() {
     e.preventDefault();
     // Now call the addNote function that in NoteState componenet
     addNote(note.title, note.description, note.tag);
+    setNote({title:"", description:"", tag:""});
   }
 
   // here We are assigning the input fields value to the note state'object
@@ -26,17 +27,17 @@ function AddNote() {
       <form>
         <div className="mb-3">
           <label htmlFor="title" className="form-label">Title of Note</label>
-          <input type="text" className="form-control" id="title" name="title"  aria-describedby="titlehelp" onChange={onChange}/>
+          <input type="text" className="form-control" id="title" name="title"  aria-describedby="titlehelp" onChange={onChange} value={note.title}/>
         </div>
         <div className="mb-3">
           <label htmlFor="description" className="form-label">Description of Note</label>
-          <input type="text" className="form-control" id="description" name="description" onChange={onChange}/>
+          <input type="text" className="form-control" id="description" name="description" onChange={onChange} value={note.description}/>
         </div>
         <div className="mb-3">
           <label htmlFor="tag" className="form-label">Tag of Note</label>
-          <input type="text" className="form-control" id="tag" name="tag" onChange={onChange}/>
+          <input type="text" className="form-control" id="tag" name="tag" onChange={onChange} value={note.tag}/>
         </div>
-        <button type="submit" className="btn btn-primary" onClick={handleClick}>Submit</button>
+        <button disabled={note.title.length<5 || note.description.length<5} type="submit" className="btn btn-primary" onClick={handleClick}>Submit</button>
       </form>
     </div>
   )

@@ -64,13 +64,16 @@ function Notes() {
             </div>
             <div className="modal-footer">
               <button ref={refHide} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" className="btn btn-primary" onClick={() => { submitUpdatedNote() }}>Save changes</button>
+              <button disabled={newNote.etitle.length<5 || newNote.edescription.length<5} type="button" className="btn btn-primary" onClick={() => { submitUpdatedNote() }}>Save changes</button>
             </div>
           </div>
         </div>
       </div>
       <div className='row my-4'>
         <h2>Your Notes</h2>
+        <div className="container mx-1">
+          {notes.length===0 && 'No Notes to Display'}
+        </div>
         {/* printing notes array using map  */}
         {notes.map((note, id) => {
           return <Noteitem key={id} updateNote={updateNote} note={note} />

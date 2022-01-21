@@ -17,7 +17,6 @@ const NoteState=(props)=>{
       }
     });
     const json=await response.json();
-    // console.log(json);
     setNotes(json);
   }
 
@@ -34,20 +33,14 @@ const NoteState=(props)=>{
     });
 
     const json=await response.json();
-    console.log(json);
 
-    fetchAllNotes(); // we can also use fetchAllNotes() function directly
-    // we should use this I think
+    // we can also use fetchAllNotes() function directly, we should use this I think
+    // fetchAllNotes(); 
 
               //or
 
     // // We will created a note object and now concate this object to notes array of object
-    // const note={
-    //   "title":title,
-    //   "description":description,
-    //   "tag":tag
-    // } 
-    // setNotes(notes.concat(note)); // arr.concat() will return an updated array
+    setNotes(notes.concat(json)); // arr.concat() will return an updated array
   }
 
   // deleteNote
@@ -61,10 +54,9 @@ const NoteState=(props)=>{
       }
     });
     const json=await response.json();
-    console.log(json);
 
-    // fetchAllNotes(); // we can also use fetchAllNotes() function directly
-    // we should use this I think
+    // we can also use fetchAllNotes() function directly,we should use this I think
+    // fetchAllNotes();
 
               //or
 
@@ -85,10 +77,9 @@ const NoteState=(props)=>{
       body: JSON.stringify({title, description, tag})
     });
     const json=await response.json();
-    console.log(json);
 
-    // fetchAllNotes(); // we can also use fetchAllNotes() function directly
-    // we should use this I think
+    // we can also use fetchAllNotes() function directly, we should use this I think
+    // fetchAllNotes(); 
 
               //or
 
