@@ -48,15 +48,16 @@ router.post('/createuser', [
 })
 
 
-// Route:2 - Login a User using credential.  "/api/auth/login".   NO Login Required.
+// Route:2 - Login a User using credential:POST.  "/api/auth/login".   NO Login Required.
 router.post('/login', [
   body('email', 'Enter valid email').isEmail(),
   body('password', 'password can not be blank').exists(),
 ], async (req, res) => {
   // Check for vaidation according to the rule defined at line no. 53, 54;
   const errors = validationResult(req);
+  let success=false;
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+    return res.status(400).json({success, errors: errors.array() });
   }
 
   // destructure the email and password from body request
@@ -66,13 +67,13 @@ router.post('/login', [
     // Checking whether email is exist or not 
     let user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ error: "Please try to login using correct credentials" });
+      return res.status(400).json({success,  error: "Please try to login using correct credentials" });
     }
 
     // Now Comparing password with help of bcryptjs
     const comparepassword = await bcrypt.compare(password, user.password);
     if (!comparepassword) {
-      return res.status(400).json({ error: "Please try to login using correct credentials" });
+      return res.status(400).json({success,  error: "Please try to login using correct credentials" });
     }
 
     // Now if user enter coorect password and login then user got logged in;
@@ -80,7 +81,8 @@ router.post('/login', [
     // returning user id in Token
     const data = { user:{id: user.id} };
     const auth_token = jwt.sign(data, JWT_secret);
-    res.json({ auth_token });
+    success=true;
+    res.json({success, auth_token });
   }
   catch (error) {
     console.error(error.message);
