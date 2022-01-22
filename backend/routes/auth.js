@@ -12,17 +12,18 @@ router.post('/createuser', [
   body('email', 'Enter valid email').isEmail(),
   body('name', 'Enter valid email').isLength({ min: 3 }),
   body('password').isLength({ min: 5 })], async (req, res) => {
+    let success=false;
   // Check fo vaidation whether is any rule(defined in User model) breaked or not
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+    return res.status(400).json({success, errors: errors.array() });
   }
 
   // Check Whether user with same email id exist or not
   try {
     let user = await User.findOne({ email: req.body.email });
     if (user) {
-      return res.status(400).json({ error: "Sorry user with same email id already exist" });
+      return res.status(400).json({success, error: "Sorry user with same email id already exist" });
     }
 
     // hashing of password
@@ -39,7 +40,9 @@ router.post('/createuser', [
     // returning user id in Token
     const data = { user:{id: user.id} };
     const auth_token = jwt.sign(data, JWT_secret);
-    res.json({ auth_token });
+    // Now send this auth_token to signup user
+    success=true;
+    res.json({success, auth_token });
   }
   catch (error) {
     console.error(error.message);

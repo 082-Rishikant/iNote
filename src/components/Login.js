@@ -27,6 +27,7 @@ function Login() {
     {
       //Redirect the user to Home page
       localStorage.setItem('token', json.auth_token);
+      setCredentials({email:"", password:""});
       navigate("/");
     }
     else
