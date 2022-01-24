@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import {useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 
-function Login() {
-  const host="http://localhost:5000";
-  const [credentials, setCredentials] = useState({email:"", password:""});
+function Login(props) {
+  const host = "http://localhost:5000";
+  const [credentials, setCredentials] = useState({ email: "", password: "" });
 
-  let navigate=useNavigate ();
+  let navigate = useNavigate();
 
-  const onChange=(e)=>{
-    setCredentials({...credentials, [e.target.name]:e.target.value})
+  const onChange = (e) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value })
   }
 
-  const handleLogin= async (e)=>{
+  const handleLogin = async (e) => {
     e.preventDefault();
     // API Call To send Request for Login
     const response = await fetch(`${host}/api/auth/login/`, {
@@ -20,35 +20,37 @@ function Login() {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({email:credentials.email, password:credentials.password}) 
+      body: JSON.stringify({ email: credentials.email, password: credentials.password })
     });
-    const json=await response.json();
-    if(json.success)
-    {
+    const json = await response.json();
+    if (json.success) {
       //Redirect the user to Home page
       localStorage.setItem('token', json.auth_token);
-      setCredentials({email:"", password:""});
+      setCredentials({ email: "", password: "" });
       navigate("/");
+      props.showAlert("Login successfully", "success");
     }
-    else
-    {
+    else {
       //wrong details
-      alert("Please enter Right credential")
+      props.showAlert("Invalid credentials", "danger");
     }
   }
 
   return (
     <form onSubmit={handleLogin}>
-    <div className="mb-3">
-      <label htmlFor="email" className="form-label">Email</label>
-      <input type="email" className="form-control" id="email" name="email" value={credentials.email} onChange={onChange} aria-describedby="emailHelp"/>
-    </div>
-    <div className="mb-3">
-      <label htmlFor="password" className="form-label">Password</label>
-      <input type="password" className="form-control" id="password" name="password" value={credentials.password} onChange={onChange}/>
-    </div>
-    <button type="submit" className="btn btn-primary">Login</button>
-  </form>
+      <div className="mb-4">
+        <h1>Login</h1>
+      </div>
+      <div className="mb-3">
+        <label htmlFor="email" className="form-label">Email</label>
+        <input type="email" className="form-control" id="email" name="email" value={credentials.email} onChange={onChange} aria-describedby="emailHelp" />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="password" className="form-label">Password</label>
+        <input type="password" className="form-control" id="password" name="password" value={credentials.password} onChange={onChange} />
+      </div>
+      <button type="submit" className="btn btn-primary">Login</button>
+    </form>
   )
 }
 

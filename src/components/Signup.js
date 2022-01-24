@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import {useNavigate } from 'react-router-dom'
 
-function Signup() {
+function Signup(props) {
   const host="http://localhost:5000";
   const [credentials, setCredentials] = useState({name:"",email:"", password:"",cpassword:""});
 
@@ -29,15 +29,19 @@ function Signup() {
       //Redirect the user to Home page
       localStorage.setItem('token', json.auth_token);
       navigate("/");
+      props.showAlert("Signup successfully", "success");
     }
     else
     {
       //wrong details
-      alert("Please Signup with Right credential")
+      props.showAlert("Invalid details", "danger");
     }
   }
   return (
     <form onSubmit={handleSignup}>
+      <div className="mb-4">
+      <h1>Signup</h1>
+      </div>
       <div className="mb-3">
         <label htmlFor="name" className="form-label">Your Name</label>
         <input type="text" className="form-control" id="name" onChange={onChange} name='name' minLength={3} required/>

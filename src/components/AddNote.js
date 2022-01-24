@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import NoteContext from "../context/notes/NoteContext";
 
-function AddNote() {
+function AddNote(props) {
   // using NoteContext so that we can use, call and update the state that are exported  in NoteState
   const context = useContext(NoteContext);
   const {addNote}=context;
@@ -14,6 +14,7 @@ function AddNote() {
     // Now call the addNote function that in NoteState componenet
     addNote(note.title, note.description, note.tag);
     setNote({title:"", description:"", tag:""});
+    props.showAlert("Notes has been Added", "success");
   }
 
   // here We are assigning the input fields value to the note state'object

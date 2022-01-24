@@ -3,7 +3,7 @@ import NoteContext from "../context/notes/NoteContext";
 import Noteitem from './Noteitem';
 import AddNote from "./AddNote";
 
-function Notes() {
+function Notes(props) {
   const context = useContext(NoteContext);
   const { notes, fetchAllNotes ,editNote} = context;
   useEffect(() => {
@@ -24,6 +24,7 @@ function Notes() {
   const submitUpdatedNote = () => {
     editNote(newNote.id,newNote.etitle, newNote.edescription, newNote.etag);
     refHide.current.click();
+    props.showAlert("Note Updated successfully", "success");
   }
 
   const onChange=(e)=>{
@@ -32,7 +33,7 @@ function Notes() {
 
   return (
     <>
-      <AddNote />
+      <AddNote showAlert={props.showAlert}/>
       {/* <!-- Button trigger modal --> */}
       <button ref={refShow} type="button" className="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Launch demo modal
@@ -76,7 +77,7 @@ function Notes() {
         </div>
         {/* printing notes array using map  */}
         {notes.map((note, id) => {
-          return <Noteitem key={id} updateNote={updateNote} note={note} />
+          return <Noteitem key={id} updateNote={updateNote} note={note} showAlert={props.showAlert}/>
         })}
       </div>
     </>
