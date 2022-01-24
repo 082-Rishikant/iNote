@@ -24,6 +24,7 @@ function Signup(props) {
       body: JSON.stringify({name, email,password}) 
     });
     const json=await response.json();
+    // console.log(json.name);
     if(json.success)
     {
       //Redirect the user to Home page

@@ -1,11 +1,18 @@
-import { useEffect } from 'react';
-import { Link, useLocation } from "react-router-dom";
+import NoteContext from "../context/notes/NoteContext";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useContext } from "react";
 
 function Navbar() {
+  const context = useContext(NoteContext);
+  const {notes} = context;
+
   let location = useLocation();
-  useEffect(() => {
-    // console.log(location.pathname)
-  }, [location]);
+  let navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate("/login");
+  }
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
@@ -23,10 +30,13 @@ function Navbar() {
               <Link className={`nav-link ${location.pathname === "/about"}?"active":""`} to="/about">About</Link>
             </li>
           </ul>
-          <div className="d-flex">
+          {!localStorage.getItem('token') ? <div className="d-flex">
             <Link className="btn btn-primary mx-1" to="/login" role="button">Login</Link>
             <Link className="btn btn-primary mx-1" to="/signup" role="button">Signup</Link>
-          </div>
+          </div> : <div className="d-flex">
+            {/* <h2>Welcome {notes[0].user}</h2> */}
+            <button className="btn btn-primary mx-1" onClick={handleLogout}>Logout</button>
+          </div>}
         </div>
       </div>
     </nav>
