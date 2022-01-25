@@ -4,7 +4,7 @@ import { useContext } from "react";
 
 function Navbar() {
   const context = useContext(NoteContext);
-  const {notes} = context;
+  const {UserName} = context;
 
   let location = useLocation();
   let navigate = useNavigate();
@@ -30,11 +30,12 @@ function Navbar() {
               <Link className={`nav-link ${location.pathname === "/about"}?"active":""`} to="/about">About</Link>
             </li>
           </ul>
+          {/* if token is there in your browser then show Logout button */}
           {!localStorage.getItem('token') ? <div className="d-flex">
             <Link className="btn btn-primary mx-1" to="/login" role="button">Login</Link>
             <Link className="btn btn-primary mx-1" to="/signup" role="button">Signup</Link>
           </div> : <div className="d-flex">
-            {/* <h2>Welcome {notes[0].user}</h2> */}
+            <p className="text-white m-2">Welcome {UserName}</p>
             <button className="btn btn-primary mx-1" onClick={handleLogout}>Logout</button>
           </div>}
         </div>
